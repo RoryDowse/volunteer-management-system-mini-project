@@ -1,11 +1,12 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-// Define the structure of the Volunteer model attributes
+// Define the structure of the Volunteer model with properties
 interface VolunteerAttributes {
   id: number;
   volunteerName: string;
 }
 
 // Define the attributes required for creating a new volunteer
+// Allows "id" to be auto-generated through autoIncrement
 interface VolunteerCreationAttributes extends Optional<VolunteerAttributes, 'id'> {}
 
 // Extend the Model with the Volunteer class and implement the VolunteerAttributes interface for specified attributes
@@ -34,7 +35,7 @@ export function VolunteerFactory(sequelize: Sequelize): typeof Volunteer {
     sequelize,
     modelName: 'Volunteer',
     tableName: 'volunteers',
-    timestamps: false,
+    timestamps: false, // don't create createdAt and updatedAt columns
   });
   
   return Volunteer;

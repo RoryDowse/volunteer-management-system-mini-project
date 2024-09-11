@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import { Volunteer } from './volunteer.js';
 
+// Define the structure of the Work model with properties
 interface WorkAttributes {
   id: number;
   name: string;
@@ -9,8 +10,12 @@ interface WorkAttributes {
   assignedVolunteerId?: number;
 }
 
+
+// Define the attributes required for creating a work item
+// Allows "id" to be auto-generated through autoIncrement
 interface WorkCreationAttributes extends Optional<WorkAttributes, 'id'> {}
 
+// Extend the Model with the Work class and implement the WorkAttributes interface for specified attributes
 export class Work extends Model<WorkAttributes, WorkCreationAttributes> implements WorkAttributes {
   /* TODO: 
     Create properties of Work: */
@@ -19,9 +24,10 @@ export class Work extends Model<WorkAttributes, WorkCreationAttributes> implemen
     public status!: string;
     public description!: string;
     public assignedVolunteerId?: number;
-    public readonly assignedVolunteer?: Volunteer; 
+    public readonly assignedVolunteer?: Volunteer; // Establish connection with Volunteer model
 }
 
+// Initialize the Work model with the WorkFactory function and return the model
 export function WorkFactory(sequelize: Sequelize): typeof Work {
   // TODO: Initialize the Work Model
   Work.init({
@@ -47,14 +53,15 @@ export function WorkFactory(sequelize: Sequelize): typeof Work {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'volunteers',
+        model: 'volunteers', // link to volunteers table via foreign key
         key: 'id'
       },
     },
   }, {
     sequelize,
     modelName: 'Work',
-    timestamps: false,
+    tableName: 'works',
+    timestamps: false, // don't create createdAt and updatedAt columns
   });
 
   return Work;

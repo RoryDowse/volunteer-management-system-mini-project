@@ -18,6 +18,7 @@ function setupAssociations() {
     });
 }
 
+// Immediately set up associations
 setupAssociations();
 
 export { Volunteer, Work, setupAssociations };
