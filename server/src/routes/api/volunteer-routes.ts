@@ -23,7 +23,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     if (volunteer) {
       res.status(200).json(volunteer);
     } else {
-      res.status(400).json({ error: 'Volunteer not found' });
+      res.status(404).json({ error: 'Volunteer not found' });
     }
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve volunteer' });
